@@ -13,10 +13,19 @@
         android:theme="@style/Theme.E_comerce"
         tools:targetApi="31">
         <activity
-            android:name=".LoginPage"
+            android:name=".Activites.CustomerHomePage"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".Activites.CustomerHomePage"
+            android:exported="false" />
+        <activity
+            android:name=".Activites.AdminHomePage"
+            android:exported="false" />
+        <activity
+            android:name=".Activites.LoginPage"
+            android:exported="false" />
+        <activity
+            android:name=".Activites.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
