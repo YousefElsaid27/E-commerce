@@ -5,11 +5,11 @@ import com.example.e_comerce.JavaClasses.User;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RememberedUserManager {
+public class RememberedListAccess {
 
     List<RememberedUser> rememberedUsers;
 
-    public RememberedUserManager()
+    public RememberedListAccess()
     {
 
         rememberedUsers=new ArrayList<>();
@@ -19,8 +19,8 @@ public class RememberedUserManager {
     {
 
         //Get it from the database but this data for testing
-        rememberedUsers.add(new RememberedUser("Admin mahmoud", "123"));
-        rememberedUsers.add(new RememberedUser("Customer mahmoud", "123"));
+        rememberedUsers.add(new RememberedUser("A mahmoud", "123"));
+        rememberedUsers.add(new RememberedUser("C mahmoud", "123"));
 
         return rememberedUsers;
 

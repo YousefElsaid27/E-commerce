@@ -16,10 +16,10 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.e_comerce.DatabaseAccess.AdminDbAccess;
+import com.example.e_comerce.DatabaseAccess.CustomerDbAccess;
 import com.example.e_comerce.DatabaseAccess.RememberedUser;
-import com.example.e_comerce.DatabaseAccess.RememberedUserManager;
-import com.example.e_comerce.JavaClasses.AdminAuthentication;
-import com.example.e_comerce.JavaClasses.CustomerAuthentication;
+import com.example.e_comerce.DatabaseAccess.RememberedListAccess;
 import com.example.e_comerce.JavaClasses.SignIn;
 import com.example.e_comerce.JavaClasses.User;
 import com.example.e_comerce.R;
@@ -44,7 +44,7 @@ public class LoginPage extends AppCompatActivity {
     String username;
     String password;
     User loggedInUser;
-    RememberedUserManager rememberedUserManager;
+    RememberedListAccess rememberedUserManager;
     MaterialCheckBox rememberMeCheckbox;
 
 
@@ -73,7 +73,7 @@ public class LoginPage extends AppCompatActivity {
 
     private void initializeRememberList() {
         // Initialize the list of credentials
-        rememberedUserManager=new RememberedUserManager();
+        rememberedUserManager=new RememberedListAccess();
         RememberUserList =rememberedUserManager.GetRememberedUsers();
         // Populate usernames list
         usernames = new ArrayList<>();
@@ -132,9 +132,9 @@ public class LoginPage extends AppCompatActivity {
 
             // Initialize SignIn based on selected user type
             if (selectedId == R.id.CustomerRadioButton) {
-                signIn = new SignIn(new CustomerAuthentication());
+                signIn = new SignIn(new CustomerDbAccess());
             } else {
-                signIn = new SignIn(new AdminAuthentication());
+                signIn = new SignIn(new AdminDbAccess());
             }
 
             // Authenticate the user
