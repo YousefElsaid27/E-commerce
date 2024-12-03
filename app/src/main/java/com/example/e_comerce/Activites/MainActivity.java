@@ -2,9 +2,15 @@ package com.example.e_comerce.Activites;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.ListView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.e_comerce.JavaClasses.myadapter;
+
+import java.util.ArrayList;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,5 +25,9 @@ public class MainActivity extends AppCompatActivity {
 
         // Finish MainActivity so it's not in the back stack
         finish();
+
+
+
+
     }
 }
