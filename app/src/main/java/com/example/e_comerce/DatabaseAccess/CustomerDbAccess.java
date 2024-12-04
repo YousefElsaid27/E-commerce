@@ -9,9 +9,11 @@ public class CustomerDbAccess extends UserDbAccess {
 
     public User CheckUserExists(String username, String password)
     {
-        Customer customer=new Customer("C mahmoud","123",new date(1,2,2000));
-        return customer;
+        return null;
     }
 
 
+    public boolean registerCustomer(String username, String email, String password, String birthdate) {
+        return true;
+    }
 }

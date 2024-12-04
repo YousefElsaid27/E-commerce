@@ -81,9 +81,13 @@ public class LoginPage extends AppCompatActivity {
         rememberedUserManager=new RememberedListAccess();
         RememberUserList =rememberedUserManager.GetRememberedUsers();
         // Populate usernames list
+        if(RememberUserList!=null)
+        {
         usernames = new ArrayList<>();
+
         for (RememberedUser User : RememberUserList) {
             usernames.add(User.UserName);
+        }
         }
     }
 

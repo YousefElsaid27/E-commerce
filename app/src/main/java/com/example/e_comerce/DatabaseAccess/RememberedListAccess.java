@@ -18,10 +18,8 @@ public class RememberedListAccess {
     public List<RememberedUser> GetRememberedUsers()
     {
 
-        //Get it from the database but this data for testing
-        rememberedUsers.add(new RememberedUser("A mahmoud", "123"));
-        rememberedUsers.add(new RememberedUser("C mahmoud", "123"));
 
+         rememberedUsers.add(new RememberedUser("No Remembered users yet", ""));
         return rememberedUsers;
 
     }

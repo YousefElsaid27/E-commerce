@@ -4,17 +4,19 @@ import java.io.Serializable;
 
 public abstract class User implements Serializable {
 
-    public String UserName ,Password;
+    public String UserName ,Password,Email;
 
-    public User()
-    {
-
-    }
     public User(String UserName,String Password)
+    {
+        this.UserName=UserName;
+        this.Password=Password;
+    }
+    public User(String UserName,String Password,String email)
     {
 
         this.UserName=UserName;
         this.Password=Password;
+        this.Email=email;
 
     }
 
