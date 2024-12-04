@@ -10,6 +10,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -46,6 +47,7 @@ public class LoginPage extends AppCompatActivity {
     User loggedInUser;
     RememberedListAccess rememberedUserManager;
     MaterialCheckBox rememberMeCheckbox;
+    TextView signUpText;
 
 
     @Override
@@ -63,6 +65,12 @@ public class LoginPage extends AppCompatActivity {
         initializeUIComponents();
         //log in
         loginButton.setOnClickListener(view -> handleLogin());
+        signUpText.setOnClickListener(v -> {
+            Intent intent = new Intent(LoginPage.this, SignUp.class);
+            startActivity(intent);
+        });
+
+
     }
 
 
@@ -86,6 +94,8 @@ public class LoginPage extends AppCompatActivity {
         loginButton = findViewById(R.id.loginButton);
         userTypeRadioGroup = findViewById(R.id.userTypeRadioGroup);
         rememberMeCheckbox = findViewById(R.id.rememberMeCheckbox);
+         signUpText = findViewById(R.id.signUpText);
+
 
         // Set up AutoComplete for usernames
         ArrayAdapter<String> usernameAdapter = new ArrayAdapter<>(
