@@ -14,13 +14,13 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class RememberMeDataBase extends SQLiteOpenHelper {
 
     // Database version and name
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
     private static final String DATABASE_NAME = "RememberMeDatabase.db";
 
     // Admin table details
     public static final String TABLE_REMEMBERME = "Rememberme";
     public static final String COLUMN_ID = "id";
-    public static final String COLUMN_USERNAME = "username";
+    public static final String COLUMN_EMAIL = "username";
 
     public static final String COLUMN_PASSWORD = "password";
 
@@ -28,7 +28,7 @@ public class RememberMeDataBase extends SQLiteOpenHelper {
     private static final String CREATE_ADMINS_TABLE =
             "CREATE TABLE " + TABLE_REMEMBERME + "("
                     + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                    + COLUMN_USERNAME + " TEXT UNIQUE NOT NULL, "
+                    + COLUMN_EMAIL + " TEXT UNIQUE NOT NULL, "
                     + COLUMN_PASSWORD + " TEXT NOT NULL)";
 
     public RememberMeDataBase(Context context) {

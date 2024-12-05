@@ -1,4 +1,4 @@
-package com.example.e_comerce.Activites;
+package com.example.e_comerce.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,7 +13,6 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.example.e_comerce.JavaClasses.Admin;
 import com.example.e_comerce.JavaClasses.Customer;
 import com.example.e_comerce.JavaClasses.myadapter;
 import com.example.e_comerce.JavaClasses.mylist;

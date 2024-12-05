@@ -46,13 +46,13 @@ dependencies {
     implementation("com.sun.mail:android-mail:1.6.2")
     implementation("com.sun.mail:android-activation:1.6.2")
 
-    // Additional recommended dependencies
     implementation("androidx.sqlite:sqlite:2.3.1")
     implementation("androidx.sqlite:sqlite-framework:2.3.1")
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
+
 
 
 }

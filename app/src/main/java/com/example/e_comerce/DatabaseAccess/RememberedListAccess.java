@@ -24,6 +24,7 @@ public class RememberedListAccess {
     List<RememberedUser> rememberedUsers;
 
     public RememberedListAccess(Context context) {
+
         dbHelper = new RememberMeDataBase(context);
         rememberedUsers=new ArrayList<>();
     // Use AdminDatabase as helper class
@@ -34,13 +35,12 @@ public class RememberedListAccess {
     public List<RememberedUser> GetRememberedUsers() {
         rememberedUsers.clear(); // Clear any existing users
 
-
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
         // Query to select all remembered users
         Cursor cursor = db.query(
                 RememberMeDataBase.TABLE_REMEMBERME,
-                new String[]{RememberMeDataBase.COLUMN_USERNAME, RememberMeDataBase.COLUMN_PASSWORD},
+                new String[]{RememberMeDataBase.COLUMN_EMAIL, RememberMeDataBase.COLUMN_PASSWORD},
                 null,
                 null,
                 null,
@@ -51,16 +51,16 @@ public class RememberedListAccess {
         // Check if there are any users in the database
         if (cursor.moveToFirst()) {
             do {
-                // Get username and password from cursor
-                String username = cursor.getString(cursor.getColumnIndexOrThrow(RememberMeDataBase.COLUMN_USERNAME));
+                // Get email and password from cursor
+                String email = cursor.getString(cursor.getColumnIndexOrThrow(RememberMeDataBase.COLUMN_EMAIL));
                 String password = cursor.getString(cursor.getColumnIndexOrThrow(RememberMeDataBase.COLUMN_PASSWORD));
 
                 // Add user to the list
-                rememberedUsers.add(new RememberedUser(username, password));
+                rememberedUsers.add(new RememberedUser(email, password));
             } while (cursor.moveToNext());
         } else {
             // If no users found, add default message
-            rememberedUsers.add(new RememberedUser("No Remembered users yet", ""));
+            rememberedUsers.add(new RememberedUser("No remembered users yet", ""));
         }
 
         // Close cursor and database
@@ -71,10 +71,11 @@ public class RememberedListAccess {
     }
 
 
+
     public boolean AddRememberedUser(User user) {   //function to push user to database
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(RememberMeDataBase.COLUMN_USERNAME, user.UserName);
+        values.put(RememberMeDataBase.COLUMN_EMAIL, user.UserName);
         values.put(RememberMeDataBase.COLUMN_PASSWORD, user.Password);
         long result = db.insert(RememberMeDataBase.TABLE_REMEMBERME, null, values);
         db.close();
@@ -82,7 +83,7 @@ public class RememberedListAccess {
         return result !=-1;
 
     }
-    /*
+/*
     public void DeleteAllRememberedUsers() {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         db.delete(RememberMeDataBase.TABLE_REMEMBERME, null, null); // Deletes all rows

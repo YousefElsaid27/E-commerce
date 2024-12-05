@@ -1,8 +1,7 @@
-package com.example.e_comerce.Activites;
+package com.example.e_comerce.Activities;
 
 import android.os.Bundle;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,9 +9,6 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.example.e_comerce.JavaClasses.Customer;
-import com.example.e_comerce.JavaClasses.myadapter;
-import com.example.e_comerce.JavaClasses.mylist;
 import com.example.e_comerce.JavaClasses.productAdapter;
 import com.example.e_comerce.JavaClasses.productmodel;
 import com.example.e_comerce.R;

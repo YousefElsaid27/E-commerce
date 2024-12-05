@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bk_login"
-    tools:context=".Activites.LoginPage">
+    tools:context=".Activities.LoginPage">
 
     <androidx.cardview.widget.CardView
         android:layout_width="0dp"
@@ -48,10 +48,10 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
 
                 <AutoCompleteTextView
-                    android:id="@+id/UsernameEditText"
+                    android:id="@+id/EmailmEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Username"
+                    android:hint="Email"
                     android:inputType="none"
                     android:completionThreshold="1"/>
             </com.google.android.material.textfield.TextInputLayout>

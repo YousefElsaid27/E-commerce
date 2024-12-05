@@ -1,15 +1,10 @@
-package com.example.e_comerce.Activites;
+package com.example.e_comerce.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.ListView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.example.e_comerce.JavaClasses.myadapter;
-
-import java.util.ArrayList;
 
 
 public class MainActivity extends AppCompatActivity {

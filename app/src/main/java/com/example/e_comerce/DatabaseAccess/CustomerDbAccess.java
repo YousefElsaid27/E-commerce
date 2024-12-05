@@ -32,19 +32,40 @@ public class CustomerDbAccess extends UserDbAccess {
         return result != -1;
     }
     // Check if user exists
-    public User CheckUserExists(String username, String password) {
+    public boolean CheckUserExists(String email) {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+        // Query to check for admin using email
+        String query = "SELECT * FROM " + CustomerDatabase.TABLE_CUSTOMERS +
+                " WHERE " + AdminDatabase.COLUMN_EMAIL + " = ?";
+
+        // Execute the query with the provided email
+        Cursor cursor = db.rawQuery(query, new String[]{email});
+
+        // Check if a matching record exists
+        boolean exists = cursor.moveToFirst();
+
+        // Close the cursor and database
+        cursor.close();
+        db.close();
+
+        return exists;  // Return true if admin with email exists, false otherwise
+    }
+    public User CheckUserExists(String email, String password) {
+       //DeleteAllRememberedUsers();
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         String query = "SELECT * FROM " + CustomerDatabase.TABLE_CUSTOMERS +
-                " WHERE " + CustomerDatabase.COLUMN_USERNAME + " = ? AND " +
+                " WHERE " + CustomerDatabase.COLUMN_EMAIL + " = ? AND " +
                 CustomerDatabase.COLUMN_PASSWORD + " = ?";
 
-        Cursor cursor = db.rawQuery(query, new String[]{username, password});
+        Cursor cursor = db.rawQuery(query, new String[]{email, password});
 
         Customer customer = null;
 
         if (cursor.moveToFirst()) {
-            String email = cursor.getString(cursor.getColumnIndexOrThrow(CustomerDatabase.COLUMN_EMAIL));
+            String username = cursor.getString(cursor.getColumnIndexOrThrow(CustomerDatabase.COLUMN_USERNAME));
             String birthdateStr = cursor.getString(cursor.getColumnIndexOrThrow(CustomerDatabase.COLUMN_BIRTHDATE));
+
             // Parse birthdate string into day, month, and year
             String[] dateParts = birthdateStr.split("/");
             int day = Integer.parseInt(dateParts[0]);
@@ -62,7 +83,11 @@ public class CustomerDbAccess extends UserDbAccess {
 
         return customer;  // Returns null if user does not exist
     }
-
+  /* public void DeleteAllRememberedUsers() {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        db.delete(CustomerDatabase.TABLE_CUSTOMERS, null, null); // Deletes all rows
+        db.close();
+    }*/
 
 
 }

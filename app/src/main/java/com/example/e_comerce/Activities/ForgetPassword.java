@@ -1,18 +1,15 @@
-package com.example.e_comerce.Activites;
+package com.example.e_comerce.Activities;
 
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.View;
 import android.widget.Toast;
-import androidx.annotation.NonNull;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.example.e_comerce.DatabaseAccess.AdminDatabase;
 import com.example.e_comerce.DatabaseAccess.AdminDbAccess;
-import com.example.e_comerce.DatabaseAccess.CustomerDatabase;
 import com.example.e_comerce.DatabaseAccess.CustomerDbAccess;
 import com.example.e_comerce.JavaClasses.EmailSender;
 import com.example.e_comerce.R;
@@ -28,6 +25,9 @@ public class ForgetPassword extends AppCompatActivity {
     private MaterialButton btnResetPassword;
     private AdminDbAccess adminDbAccess;
     private CustomerDbAccess customerDbAccess;
+
+    boolean  IsAdmin=false;
+    boolean IsCustomer=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,8 +67,16 @@ public class ForgetPassword extends AppCompatActivity {
     }
 
     private void SendVerificationCode(String email) {
+
+
+        IsAdmin=adminDbAccess.CheckUserExists(email);
+        IsCustomer=customerDbAccess.CheckUserExists(email);
+
+
+
         // Check if email exists in database
-        if (adminDbAccess.CheckUserExists()customerDbAccess()) {
+        if (IsCustomer||IsAdmin)
+        {
             // Generate a secure random verification code
              verificationCode = generateVerificationCode();
 

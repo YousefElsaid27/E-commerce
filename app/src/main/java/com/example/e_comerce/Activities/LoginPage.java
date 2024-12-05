@@ -1,7 +1,7 @@
 
 
 
-package com.example.e_comerce.Activites;
+package com.example.e_comerce.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,7 +21,6 @@ import androidx.core.view.WindowInsetsCompat;
 ///import
 import com.example.e_comerce.DatabaseAccess.AdminDbAccess;
 import com.example.e_comerce.DatabaseAccess.CustomerDbAccess;
-import com.example.e_comerce.DatabaseAccess.RememberMeDataBase;
 import com.example.e_comerce.DatabaseAccess.RememberedUser;
 import com.example.e_comerce.DatabaseAccess.RememberedListAccess;
 import com.example.e_comerce.JavaClasses.SignIn;
@@ -37,13 +36,13 @@ public class LoginPage extends AppCompatActivity {
     private List<RememberedUser> RememberUserList;
     private List<String> usernames;
 
-    AutoCompleteTextView usernameEditText;
+    AutoCompleteTextView EmailEditText;
     EditText passwordEditText;
     Button loginButton;
     RadioGroup userTypeRadioGroup;
     SignIn signIn;
     boolean isAuthenticated;
-    String username;
+    String Email;
     String password;
     User loggedInUser;
     RememberedListAccess rememberedUserManager;
@@ -106,7 +105,7 @@ public class LoginPage extends AppCompatActivity {
 
 
     private void initializeUIComponents() {
-        usernameEditText = findViewById(R.id.UsernameEditText);
+        EmailEditText = findViewById(R.id.EmailmEditText);
         passwordEditText = findViewById(R.id.passwordEditText);
         loginButton = findViewById(R.id.loginButton);
         userTypeRadioGroup = findViewById(R.id.userTypeRadioGroup);
@@ -121,10 +120,10 @@ public class LoginPage extends AppCompatActivity {
                 android.R.layout.simple_dropdown_item_1line,
                 usernames
         );
-        usernameEditText.setAdapter(usernameAdapter);
-        usernameEditText.setInputType(android.text.InputType.TYPE_CLASS_TEXT);
+        EmailEditText.setAdapter(usernameAdapter);
+        EmailEditText.setInputType(android.text.InputType.TYPE_CLASS_TEXT);
         // Set up listener for username selection
-        usernameEditText.setOnItemClickListener((parent, view, position, id) -> {
+        EmailEditText.setOnItemClickListener((parent, view, position, id) -> {
             // Get the selected username
             String selectedUsername = (String) parent.getItemAtPosition(position);
             // Find and set the corresponding password
@@ -142,10 +141,10 @@ public class LoginPage extends AppCompatActivity {
 
     private void handleLogin() {
         // Get input text from the fields
-        username = usernameEditText.getText().toString().trim();
+        Email = EmailEditText.getText().toString().trim();
         password = passwordEditText.getText().toString().trim();
         // Check if both fields are filled
-        if (!username.isEmpty() && !password.isEmpty() ) {
+        if (!Email.isEmpty() && !password.isEmpty() ) {
              selectedRadioId= userTypeRadioGroup.getCheckedRadioButtonId();
              if (selectedRadioId == -1)
                  Toast.makeText(LoginPage.this, "Please select a user type", Toast.LENGTH_SHORT).show();
@@ -167,7 +166,7 @@ public class LoginPage extends AppCompatActivity {
     private void SigningIn(SignIn signIn, int selectedRadioId) {
 
         // Authenticate the user
-        loggedInUser = signIn.Authenticate(username, password);
+        loggedInUser = signIn.Authenticate(Email, password);
         if (loggedInUser != null) {
             // User authentication successful
             HandleRememberMe();
