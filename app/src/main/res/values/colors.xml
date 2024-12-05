@@ -3,5 +3,8 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="background_light">#F5F5F5</color>
+    <color name="design_default_primary_dark">#FF0000</color> <!-- Replace with your color -->
+    <color name="blue">#2196F3</color>
+
 
 </resources>

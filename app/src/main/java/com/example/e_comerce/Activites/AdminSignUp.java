@@ -52,8 +52,8 @@ public class AdminSignUp extends AppCompatActivity {
         btnSignUp.setOnClickListener(v -> {
             if (validateForm()) {
 
-               adminDbAccess  = new AdminDbAccess();
-                boolean registrationSuccess = adminDbAccess.registerCustomer(username, email, password, birthdate);
+               adminDbAccess  = new AdminDbAccess(this);
+                boolean registrationSuccess = adminDbAccess.registerAdmin(username, email, password);
 
                 if (registrationSuccess) {
                     showToast("Registration Successful!");

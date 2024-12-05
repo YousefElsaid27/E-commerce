@@ -82,8 +82,7 @@ public class CustomerSignUp extends AppCompatActivity {
     private void setupSignUpButton() {
         btnSignUp.setOnClickListener(v -> {
             if (validateForm()) {
-
-                customerDbAccess=new CustomerDbAccess();
+                customerDbAccess=new CustomerDbAccess(this);
                 boolean registrationSuccess = customerDbAccess.registerCustomer(username, email, password, birthdate);
 
                 if (registrationSuccess) {

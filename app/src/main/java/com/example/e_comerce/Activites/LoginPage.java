@@ -21,6 +21,7 @@ import androidx.core.view.WindowInsetsCompat;
 ///import
 import com.example.e_comerce.DatabaseAccess.AdminDbAccess;
 import com.example.e_comerce.DatabaseAccess.CustomerDbAccess;
+import com.example.e_comerce.DatabaseAccess.RememberMeDataBase;
 import com.example.e_comerce.DatabaseAccess.RememberedUser;
 import com.example.e_comerce.DatabaseAccess.RememberedListAccess;
 import com.example.e_comerce.JavaClasses.SignIn;
@@ -48,6 +49,8 @@ public class LoginPage extends AppCompatActivity {
     RememberedListAccess rememberedUserManager;
     MaterialCheckBox rememberMeCheckbox;
     TextView signUpText;
+    int selectedRadioId;
+    TextView ForgetPasswordText;
 
 
     @Override
@@ -60,13 +63,23 @@ public class LoginPage extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
         //Initialize credentials
         initializeRememberList();
         initializeUIComponents();
         //log in
         loginButton.setOnClickListener(view -> handleLogin());
+
+
+
         signUpText.setOnClickListener(v -> {
             Intent intent = new Intent(LoginPage.this, SignUp.class);
+            startActivity(intent);
+        });
+
+        ForgetPasswordText.setOnClickListener(v -> {
+
+            Intent intent = new Intent(LoginPage.this, ForgetPassword.class);
             startActivity(intent);
         });
 
@@ -78,7 +91,7 @@ public class LoginPage extends AppCompatActivity {
 
     private void initializeRememberList() {
         // Initialize the list of credentials
-        rememberedUserManager=new RememberedListAccess();
+        rememberedUserManager=new RememberedListAccess(this);
         RememberUserList =rememberedUserManager.GetRememberedUsers();
         // Populate usernames list
         if(RememberUserList!=null)
@@ -99,6 +112,7 @@ public class LoginPage extends AppCompatActivity {
         userTypeRadioGroup = findViewById(R.id.userTypeRadioGroup);
         rememberMeCheckbox = findViewById(R.id.rememberMeCheckbox);
          signUpText = findViewById(R.id.signUpText);
+        ForgetPasswordText=findViewById(R.id.forgetPasswordText);
 
 
         // Set up AutoComplete for usernames
@@ -131,15 +145,18 @@ public class LoginPage extends AppCompatActivity {
         username = usernameEditText.getText().toString().trim();
         password = passwordEditText.getText().toString().trim();
         // Check if both fields are filled
-        if (!username.isEmpty() && !password.isEmpty()) {
-            int selectedRadioId= userTypeRadioGroup.getCheckedRadioButtonId();
-            // Initialize SignIn based on selected user type
+        if (!username.isEmpty() && !password.isEmpty() ) {
+             selectedRadioId= userTypeRadioGroup.getCheckedRadioButtonId();
+             if (selectedRadioId == -1)
+                 Toast.makeText(LoginPage.this, "Please select a user type", Toast.LENGTH_SHORT).show();
+            else {
+             // Initialize SignIn based on selected user type
             if (selectedRadioId == R.id.CustomerRadioButton) {
-                signIn = new SignIn(new CustomerDbAccess());
+                signIn = new SignIn(new CustomerDbAccess(this));
             } else {
-                signIn = new SignIn(new AdminDbAccess());
+                signIn = new SignIn(new AdminDbAccess(this));
             }
-            SigningIn(signIn,selectedRadioId);
+            SigningIn(signIn,selectedRadioId);}
         } else {
             // Show toast message if one or both fields are empty
             Toast.makeText(LoginPage.this, "Please enter both username and password", Toast.LENGTH_SHORT).show();
