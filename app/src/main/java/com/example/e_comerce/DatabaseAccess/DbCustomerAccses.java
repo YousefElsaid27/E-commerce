@@ -11,13 +11,17 @@ import com.example.e_comerce.JavaClasses.User;
 
 public class CustomerDbAccess extends UserDbAccess {
     CustomerDatabase dbHelper;
+    AdminDbAccess adminDbAccess;
     public CustomerDbAccess(Context context) {
         this.dbHelper = new CustomerDatabase(context);
+        adminDbAccess=new AdminDbAccess(context);
     }
 
     // Register a new customer
     public boolean registerCustomer(String username, String email, String password, String birthdate) {
 
+        if (adminDbAccess.CheckUserExists(email))
+            return  false;
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(CustomerDatabase.COLUMN_USERNAME, username);
