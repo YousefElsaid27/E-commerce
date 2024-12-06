@@ -1,0 +1,173 @@
+import java.sql.*;
+import java.util.Scanner;
+
+public class AdminFunctions {
+    // Database connection method
+    private static Connection connect() {
+        String url = "jdbc:sqlite:shopping_cart.db";
+        Connection conn = null;
+        try {
+            conn = DriverManager.getConnection(url);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return conn;
+    }
+
+    // Method to create the products table if it doesn't exist
+    private static void createTable() {
+        String sql = "CREATE TABLE IF NOT EXISTS products (" +
+                     "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                     "name TEXT NOT NULL," +
+                     "category TEXT NOT NULL," +
+                     "quantity INTEGER NOT NULL" +
+                     ");";
+        try (Connection conn = connect();
+             Statement stmt = conn.createStatement()) {
+            stmt.execute(sql);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    // Method to add a new product
+    private static void addProduct() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter product name: ");
+        String name = scanner.nextLine();
+
+        System.out.print("Enter product category: ");
+        String category = scanner.nextLine();
+
+        System.out.print("Enter product quantity: ");
+        int quantity = scanner.nextInt();
+
+        String sql = "INSERT INTO products(name, category, quantity) VALUES(?, ?, ?)";
+        try (Connection conn = connect();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, name);
+            pstmt.setString(2, category);
+            pstmt.setInt(3, quantity);
+            pstmt.executeUpdate();
+            System.out.println("Product added successfully!");
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    // Admin menu
+    private static void adminMenu() {
+        Scanner scanner = new Scanner(System.in);
+        while (true) {
+            System.out.println("\nAdmin Menu:");
+            System.out.println("1. Add Product");
+            System.out.println("2. Exit");
+            System.out.print("Enter your choice: ");
+            int choice = scanner.nextInt();
+
+            switch (choice) {
+                case 1:
+                    addProduct();
+                    break;
+                case 2:
+                    System.out.println("Exiting Admin Menu.");
+                    return;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
+        }
+    }
+
+    // Main method
+    public static void main(String[] args) {
+        createTable();  // Ensure the products table exists
+        adminMenu();    // Run the admin menu
+    }
+}import java.sql.*;
+import java.util.Scanner;
+
+public class AdminFunctions {
+    // Database connection method
+    private static Connection connect() {
+        String url = "jdbc:sqlite:shopping_cart.db";
+        Connection conn = null;
+        try {
+            conn = DriverManager.getConnection(url);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return conn;
+    }
+
+    // Method to create the products table if it doesn't exist
+    private static void createTable() {
+        String sql = "CREATE TABLE IF NOT EXISTS products (" +
+                     "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                     "name TEXT NOT NULL," +
+                     "category TEXT NOT NULL," +
+                     "quantity INTEGER NOT NULL" +
+                     ");";
+        try (Connection conn = connect();
+             Statement stmt = conn.createStatement()) {
+            stmt.execute(sql);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    // Method to add a new product
+    private static void addProduct() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter product name: ");
+        String name = scanner.nextLine();
+
+        System.out.print("Enter product category: ");
+        String category = scanner.nextLine();
+
+        System.out.print("Enter product quantity: ");
+        int quantity = scanner.nextInt();
+
+        String sql = "INSERT INTO products(name, category, quantity) VALUES(?, ?, ?)";
+        try (Connection conn = connect();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, name);
+            pstmt.setString(2, category);
+            pstmt.setInt(3, quantity);
+            pstmt.executeUpdate();
+            System.out.println("Product added successfully!");
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    // Admin menu
+    private static void adminMenu() {
+        Scanner scanner = new Scanner(System.in);
+        while (true) {
+            System.out.println("\nAdmin Menu:");
+            System.out.println("1. Add Product");
+            System.out.println("2. Exit");
+            System.out.print("Enter your choice: ");
+            int choice = scanner.nextInt();
+
+            switch (choice) {
+                case 1:
+                    addProduct();
+                    break;
+                case 2:
+                    System.out.println("Exiting Admin Menu.");
+                    return;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
+        }
+    }
+
+    // Main method
+    public static void main(String[] args) {
+        createTable();  // Ensure the products table exists
+        adminMenu();    // Run the admin menu
+    }
+}
