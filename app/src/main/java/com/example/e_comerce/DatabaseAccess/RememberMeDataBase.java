@@ -20,7 +20,7 @@ public class RememberMeDataBase extends SQLiteOpenHelper {
     // Admin table details
     public static final String TABLE_REMEMBERME = "Rememberme";
     public static final String COLUMN_ID = "id";
-    public static final String COLUMN_EMAIL = "username";
+    public static final String COLUMN_EMAIL = "Email";
 
     public static final String COLUMN_PASSWORD = "password";
 

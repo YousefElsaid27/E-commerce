@@ -6,9 +6,9 @@ public abstract class User implements Serializable {
 
     public String UserName ,Password,Email;
 
-    public User(String UserName,String Password)
+    public User(String Email,String Password)
     {
-        this.UserName=UserName;
+        this.Email=Email;
         this.Password=Password;
     }
     public User(String UserName,String Password,String email)

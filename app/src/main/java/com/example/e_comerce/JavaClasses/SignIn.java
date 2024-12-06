@@ -1,12 +1,12 @@
 package com.example.e_comerce.JavaClasses;
 
-import com.example.e_comerce.DatabaseAccess.UserDbAccess;
+import com.example.e_comerce.DatabaseAccess.DbUserAccses;
 
 public class SignIn {
 
 
-    private UserDbAccess UserDBManager;
-    public SignIn( UserDbAccess UserDBManager)
+    private DbUserAccses UserDBManager;
+    public SignIn( DbUserAccses UserDBManager)
     {
         this.UserDBManager = UserDBManager;
     }

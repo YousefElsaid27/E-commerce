@@ -1,5 +1,6 @@
 package com.example.e_comerce.Activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.Toast;
@@ -9,8 +10,8 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.example.e_comerce.DatabaseAccess.AdminDbAccess;
-import com.example.e_comerce.DatabaseAccess.CustomerDbAccess;
+import com.example.e_comerce.DatabaseAccess.DbAdminAccses;
+import com.example.e_comerce.DatabaseAccess.DbCustomerAccses;
 import com.example.e_comerce.JavaClasses.EmailSender;
 import com.example.e_comerce.R;
 
@@ -23,8 +24,8 @@ public class ForgetPassword extends AppCompatActivity {
     String verificationCode;
     private TextInputEditText etEmail;
     private MaterialButton btnResetPassword;
-    private AdminDbAccess adminDbAccess;
-    private CustomerDbAccess customerDbAccess;
+    private DbAdminAccses adminDbAccess;
+    private DbCustomerAccses customerDbAccess;
 
     boolean  IsAdmin=false;
     boolean IsCustomer=false;
@@ -42,9 +43,9 @@ public class ForgetPassword extends AppCompatActivity {
         });
 
         // Initialize Database Helper
-        adminDbAccess = new AdminDbAccess(this);
+        adminDbAccess = new DbAdminAccses(this);
 
-        customerDbAccess=new CustomerDbAccess(this);
+        customerDbAccess=new DbCustomerAccses(this);
 
 
         // Initialize Email Input
@@ -60,10 +61,13 @@ public class ForgetPassword extends AppCompatActivity {
             if (!TextUtils.isEmpty(email) && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
 
                   SendVerificationCode(email);
+
             } else {
                 Toast.makeText(ForgetPassword.this, "Please enter a valid email!", Toast.LENGTH_SHORT).show();
             }
         });
+
+
     }
 
     private void SendVerificationCode(String email) {
@@ -83,11 +87,17 @@ public class ForgetPassword extends AppCompatActivity {
 
             // Send email with verification code
             sendPasswordResetEmail(email, verificationCode);
-
+            // Launch Verification Code Activity
+            Intent verificationIntent = new Intent(this, VerificationCodeActivity.class);
+            verificationIntent.putExtra("VERIFICATION_CODE", verificationCode);
+            verificationIntent.putExtra("USER_EMAIL", email);
+            startActivity(verificationIntent);
             Toast.makeText(this, "Verification code sent to your email", Toast.LENGTH_SHORT).show();
-        } else {
+        } else
+        {
             Toast.makeText(this, "No account found with this email", Toast.LENGTH_SHORT).show();
         }
+
     }
 
     private String generateVerificationCode() {

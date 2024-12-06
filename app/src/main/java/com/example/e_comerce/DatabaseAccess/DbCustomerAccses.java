@@ -9,12 +9,12 @@ import com.example.e_comerce.JavaClasses.Customer;
 import com.example.e_comerce.JavaClasses.date;
 import com.example.e_comerce.JavaClasses.User;
 
-public class CustomerDbAccess extends UserDbAccess {
+public class DbCustomerAccses extends DbUserAccses {
     CustomerDatabase dbHelper;
-    AdminDbAccess adminDbAccess;
-    public CustomerDbAccess(Context context) {
+    DbAdminAccses adminDbAccess;
+    public DbCustomerAccses(Context context) {
         this.dbHelper = new CustomerDatabase(context);
-        adminDbAccess=new AdminDbAccess(context);
+        adminDbAccess=new DbAdminAccses(context);
     }
 
     // Register a new customer
@@ -41,7 +41,7 @@ public class CustomerDbAccess extends UserDbAccess {
 
         // Query to check for admin using email
         String query = "SELECT * FROM " + CustomerDatabase.TABLE_CUSTOMERS +
-                " WHERE " + AdminDatabase.COLUMN_EMAIL + " = ?";
+                " WHERE " + CustomerDatabase.COLUMN_EMAIL + " = ?";
 
         // Execute the query with the provided email
         Cursor cursor = db.rawQuery(query, new String[]{email});
@@ -87,6 +87,30 @@ public class CustomerDbAccess extends UserDbAccess {
 
         return customer;  // Returns null if user does not exist
     }
+
+    public boolean updatePassword(String userEmail, String newPassword) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        // Prepare the content values with new password
+        ContentValues values = new ContentValues();
+        values.put(CustomerDatabase.COLUMN_PASSWORD, newPassword);
+
+        // Update the password where email matches
+        int rowsAffected = db.update(
+                CustomerDatabase.TABLE_CUSTOMERS,  // Table name
+                values,                            // New values to update
+                CustomerDatabase.COLUMN_EMAIL + " = ?",  // Where clause
+                new String[]{userEmail}            // Where arguments
+        );
+
+        // Close the database
+        db.close();
+
+        // Return true if at least one row was updated
+        return rowsAffected > 0;
+    }
+
+
   /* public void DeleteAllRememberedUsers() {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         db.delete(CustomerDatabase.TABLE_CUSTOMERS, null, null); // Deletes all rows

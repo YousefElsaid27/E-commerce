@@ -6,15 +6,14 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.example.e_comerce.JavaClasses.Admin;
-import com.example.e_comerce.JavaClasses.User;
 
-public class AdminDbAccess extends UserDbAccess {
+public class DbAdminAccses extends DbUserAccses {
 
     private AdminDatabase dbHelper;
-    private  CustomerDbAccess cutomerDbAccess;
+    private DbCustomerAccses cutomerDbAccess;
     Context context;
 
-    public AdminDbAccess(Context context) {
+    public DbAdminAccses(Context context) {
         dbHelper = new AdminDatabase(context);
         this.context=context;
        // Use AdminDatabase as helper class
@@ -22,7 +21,7 @@ public class AdminDbAccess extends UserDbAccess {
 
     // Method to insert a new admin
     public boolean registerAdmin(String username, String email, String password) {
-        cutomerDbAccess=new CustomerDbAccess(context);
+        cutomerDbAccess=new DbCustomerAccses(context);
         if(cutomerDbAccess.CheckUserExists(email))
             return false;
 
@@ -85,6 +84,30 @@ public class AdminDbAccess extends UserDbAccess {
 
         return admin;  // Return null if no admin found
     }
+
+    public boolean updatePassword(String userEmail, String newPassword) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        // Prepare the content values with new password
+        ContentValues values = new ContentValues();
+        values.put(AdminDatabase.COLUMN_PASSWORD, newPassword);
+
+        // Update the password where email matches
+        int rowsAffected = db.update(
+                AdminDatabase.TABLE_ADMINS,  // Table name
+                values,                      // New values to update
+                AdminDatabase.COLUMN_EMAIL + " = ?",  // Where clause
+                new String[]{userEmail}      // Where arguments
+        );
+
+        // Close the database
+        db.close();
+
+        // Return true if at least one row was updated
+        return rowsAffected > 0;
+    }
+
+
   /*  public void DeleteAllRememberedUsers() {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         db.delete(AdminDatabase.TABLE_ADMINS, null, null); // Deletes all rows

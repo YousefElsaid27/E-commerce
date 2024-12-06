@@ -33,6 +33,7 @@ public class RememberedListAccess {
 
 
     public List<RememberedUser> GetRememberedUsers() {
+      // DeleteAllRememberedUsers();
         rememberedUsers.clear(); // Clear any existing users
 
         SQLiteDatabase db = dbHelper.getReadableDatabase();
@@ -72,22 +73,50 @@ public class RememberedListAccess {
 
 
 
-    public boolean AddRememberedUser(User user) {   //function to push user to database
+    public boolean AddRememberedUser(User user) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        // First, check if the user already exists
+        Cursor cursor = db.query(
+                RememberMeDataBase.TABLE_REMEMBERME,
+                new String[]{RememberMeDataBase.COLUMN_EMAIL},
+                RememberMeDataBase.COLUMN_EMAIL + " = ?",
+                new String[]{user.Email},
+                null,
+                null,
+                null
+        );
+
+        boolean userExists = cursor.moveToFirst();
+        cursor.close();
+
         ContentValues values = new ContentValues();
-        values.put(RememberMeDataBase.COLUMN_EMAIL, user.UserName);
+        values.put(RememberMeDataBase.COLUMN_EMAIL, user.Email);
         values.put(RememberMeDataBase.COLUMN_PASSWORD, user.Password);
-        long result = db.insert(RememberMeDataBase.TABLE_REMEMBERME, null, values);
+
+        long result;
+        if (userExists) {
+            // If user exists, update the password
+            result = db.update(
+                    RememberMeDataBase.TABLE_REMEMBERME,
+                    values,
+                    RememberMeDataBase.COLUMN_EMAIL + " = ?",
+                    new String[]{user.Email}
+            );
+        } else {
+            // If user doesn't exist, insert a new record
+            result = db.insert(RememberMeDataBase.TABLE_REMEMBERME, null, values);
+        }
+
         db.close();
 
-        return result !=-1;
-
+        return result != -1;
     }
-/*
+
     public void DeleteAllRememberedUsers() {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         db.delete(RememberMeDataBase.TABLE_REMEMBERME, null, null); // Deletes all rows
         db.close();
     }
-*/
+
 }

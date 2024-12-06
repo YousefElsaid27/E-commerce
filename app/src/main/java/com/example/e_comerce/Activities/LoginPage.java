@@ -19,8 +19,8 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 ///import
-import com.example.e_comerce.DatabaseAccess.AdminDbAccess;
-import com.example.e_comerce.DatabaseAccess.CustomerDbAccess;
+import com.example.e_comerce.DatabaseAccess.DbAdminAccses;
+import com.example.e_comerce.DatabaseAccess.DbCustomerAccses;
 import com.example.e_comerce.DatabaseAccess.RememberedUser;
 import com.example.e_comerce.DatabaseAccess.RememberedListAccess;
 import com.example.e_comerce.JavaClasses.SignIn;
@@ -34,7 +34,7 @@ import java.util.List;
 public class LoginPage extends AppCompatActivity {
 
     private List<RememberedUser> RememberUserList;
-    private List<String> usernames;
+    private List<String> Emails;
 
     AutoCompleteTextView EmailEditText;
     EditText passwordEditText;
@@ -95,10 +95,10 @@ public class LoginPage extends AppCompatActivity {
         // Populate usernames list
         if(RememberUserList!=null)
         {
-        usernames = new ArrayList<>();
+        Emails = new ArrayList<>();
 
         for (RememberedUser User : RememberUserList) {
-            usernames.add(User.UserName);
+            Emails.add(User.Email);
         }
         }
     }
@@ -118,7 +118,7 @@ public class LoginPage extends AppCompatActivity {
         ArrayAdapter<String> usernameAdapter = new ArrayAdapter<>(
                 this,
                 android.R.layout.simple_dropdown_item_1line,
-                usernames
+                Emails
         );
         EmailEditText.setAdapter(usernameAdapter);
         EmailEditText.setInputType(android.text.InputType.TYPE_CLASS_TEXT);
@@ -128,7 +128,7 @@ public class LoginPage extends AppCompatActivity {
             String selectedUsername = (String) parent.getItemAtPosition(position);
             // Find and set the corresponding password
             for (RememberedUser User : RememberUserList) {
-                if (User.UserName.equals(selectedUsername)) {
+                if (User.Email.equals(selectedUsername)) {
                     passwordEditText.setText(User.Password);
                     break;
                 }
@@ -151,9 +151,9 @@ public class LoginPage extends AppCompatActivity {
             else {
              // Initialize SignIn based on selected user type
             if (selectedRadioId == R.id.CustomerRadioButton) {
-                signIn = new SignIn(new CustomerDbAccess(this));
+                signIn = new SignIn(new DbCustomerAccses(this));
             } else {
-                signIn = new SignIn(new AdminDbAccess(this));
+                signIn = new SignIn(new DbAdminAccses(this));
             }
             SigningIn(signIn,selectedRadioId);}
         } else {

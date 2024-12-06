@@ -19,8 +19,9 @@ public class EmailSender {
     private static final String SMTP_PORT = "587";
 
     // CRITICAL: Use your ACTUAL Gmail and EXACT App Password
-    private static final String SENDER_EMAIL = "mahmoudahmedsoftwareeng@gmail.com";
-    private static final String SENDER_PASSWORD = "odudidizfwkytinm";
+    private static final String SENDER_EMAIL = "mobileproject37@gmail.com";
+    private static final String SENDER_PASSWORD = "zefqjxaainzuouij";
+
 
     public static void sendVerificationCode(String recipientEmail, String verificationCode) {
         new SendEmailTask(SENDER_EMAIL, SENDER_PASSWORD).execute(recipientEmail, verificationCode);
