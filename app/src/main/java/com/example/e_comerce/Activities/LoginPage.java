@@ -23,6 +23,8 @@ import com.example.e_comerce.DatabaseAccess.DbAdminAccses;
 import com.example.e_comerce.DatabaseAccess.DbCustomerAccses;
 import com.example.e_comerce.DatabaseAccess.RememberedUser;
 import com.example.e_comerce.DatabaseAccess.RememberedListAccess;
+import com.example.e_comerce.JavaClasses.Cateogry;
+import com.example.e_comerce.JavaClasses.Product;
 import com.example.e_comerce.JavaClasses.SignIn;
 import com.example.e_comerce.JavaClasses.User;
 import com.example.e_comerce.R;
@@ -62,12 +64,12 @@ public class LoginPage extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
         //Initialize credentials
         initializeRememberList();
         initializeUIComponents();
         //log in
         loginButton.setOnClickListener(view -> handleLogin());
+
 
 
 

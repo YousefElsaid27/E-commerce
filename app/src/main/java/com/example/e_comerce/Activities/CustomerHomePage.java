@@ -1,9 +1,12 @@
 package com.example.e_comerce.Activities;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -13,12 +16,15 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.e_comerce.JavaClasses.Cateogry;
 import com.example.e_comerce.JavaClasses.Customer;
+import com.example.e_comerce.JavaClasses.Product;
 import com.example.e_comerce.JavaClasses.myadapter;
 import com.example.e_comerce.JavaClasses.mylist;
 import com.example.e_comerce.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class CustomerHomePage extends AppCompatActivity {
 
@@ -26,6 +32,8 @@ public class CustomerHomePage extends AppCompatActivity {
     myadapter adapter;
     String[] title;
     int[] icon;
+
+    List<Cateogry> ListOfCateogry;
     ArrayList<mylist> arraylist=new ArrayList<mylist>();
 
     @Override
@@ -39,7 +47,7 @@ public class CustomerHomePage extends AppCompatActivity {
             return insets;
         });
 
-
+        ListOfCateogry=new ArrayList<>();
         // Move the user retrieval and toast outside of the WindowInsetsCompat listener
         Customer loggedInUser = (Customer) getIntent().getSerializableExtra("loggedInUser"); // Note: changed from "loggedInUser" to match the sender
 
@@ -49,6 +57,42 @@ public class CustomerHomePage extends AppCompatActivity {
             // For example:
             Toast.makeText(this, "Hello " + loggedInUser.UserName + loggedInUser.dateOfBirth.toString(), Toast.LENGTH_SHORT).show();
         }
+
+        //Test Data "one category and one product in it Create Loop if you Want to set more " /////////////////////////////////////////////////////////////////////////
+
+        //Get the product pic from its Location
+        Bitmap ProductImage = BitmapFactory.decodeFile("/path/to/your/product.jpg");
+
+        // Assign The products data
+        Product Product=new Product(1,"First product Name",555.0,5,ProductImage);
+
+        //Fill the list of products
+        List<Product> ListOfProduct=new ArrayList<>();
+        ListOfProduct.add(Product);
+
+        //Get the Cateogry pic from its Location
+        Bitmap CateogryImage = BitmapFactory.decodeFile("/path/to/your/cateogry.jpg");
+
+        //assign cateogry data
+        Cateogry cateogry=new Cateogry("First Cateogry Name",ListOfProduct,CateogryImage);
+
+        //Fill the list of Cateogry
+
+        ListOfCateogry.add(cateogry);
+
+
+        //Finally u have this variable "ListOfCateogry" contain all data to be shown . Use only this variable because this is which i will pass to u from the data base
+
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        //how to show  image In The Image View
+
+        //ImageView imageView = findViewById(R.id.yourImageView);
+
+        //imageView.setImageBitmap(ListOfCateogry.get(0).Products.get(0).Image  );
+
 
         title = new String[]{"books", "Electronics", "Fashion", "Home", "Sports","Toys"};
         icon = new int[]{R.drawable.books, R.drawable.electronics, R.drawable.fashion, R.drawable.home_kitchen, R.drawable.sports_outdoors,R.drawable.toys_games};
